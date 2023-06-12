@@ -72,6 +72,17 @@ namespace UC1.Controllers
                     break;
             }
         }
+
+        /// <summary>
+        /// Limits the amount of data in results set.
+        /// </summary>
+        /// <param name="direction">Number of record to retreive.</param>
+        /// <param name="countries">Reference to countries collection.</param>
+        private static void paginate(int number, ref IEnumerable<Country> countries)
+        {
+            countries = countries.Take(number);
+        }
+
         #endregion
     }
 }
