@@ -1,10 +1,13 @@
 ﻿using System.Runtime.Serialization;
 
-public class CountryName
+namespace UC1.Models
 {
-    [DataMember(Name = "common")]
-    public string? Common { get; set; }
+    public class CountryName
+    {
+        [DataMember(Name = "common")]
+        public string? Common { get; set; }
 
-    [DataMember(Name = "official")]
-    public string? Official { get; set; }
+        [DataMember(Name = "official")]
+        public string? Official { get; set; }
+    }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
+using UC1.Models;
 
 namespace UC1.Controllers
 {
@@ -6,8 +8,16 @@ namespace UC1.Controllers
     [ApiController]
     public class CountriesController : ControllerBase
     {
-        private const string externalApiUrl = "https://restcountries.com/v3.1/all";
-        
+        private IConfiguration _configuration { get; }
+        private readonly string _externalApiUrl;
+
+
+        public CountriesController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            _externalApiUrl = _configuration.GetValue<string>("Urls:CountriesApiUrl");
+        }
+
         [HttpGet]
         [Route("")]
         public async Task<object> Get(string? param1, int? param2, string? param3)
@@ -15,7 +25,7 @@ namespace UC1.Controllers
             object? apiResponse = null;
             using (var client = new HttpClient())
             {
-                apiResponse = await client.GetFromJsonAsync(externalApiUrl, typeof(List<Country>));
+                apiResponse = await client.GetFromJsonAsync(_externalApiUrl, typeof(List<Country>));
             }
             return Ok(apiResponse);
         }

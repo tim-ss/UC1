@@ -1,12 +1,14 @@
 ﻿using System.Runtime.Serialization;
 using System.Xml.Linq;
 
-public class Currency
+namespace UC1.Models
 {
-    [DataMember(Name = "name")]
-    public string? Name { get; set; }
+    public class Currency
+    {
+        [DataMember(Name = "name")]
+        public string? Name { get; set; }
 
-    [DataMember(Name = "symbol")]
-    public string? Symbol { get; set; }
+        [DataMember(Name = "symbol")]
+        public string? Symbol { get; set; }
+    }
 }
-
