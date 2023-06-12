@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Immutable;
 using System.Configuration;
 using UC1.Models;
 
@@ -39,17 +40,37 @@ namespace UC1.Controllers
         /// <param name="countries">Reference to countries collection.</param>
         private static void filterByName(string searchString, ref IEnumerable<Country> countries)
         {
-            countries = countries.Where(c => !string.IsNullOrEmpty(c.Name?.Common) ? c.Name.Common.Contains(searchString, StringComparison.InvariantCultureIgnoreCase) : false);
+            countries = countries.Where(c => !string.IsNullOrEmpty(c.Name?.Common) && c.Name.Common.Contains(searchString, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
         /// Filters countries by population. Countries where the population is less than provided number are shown in result set.
         /// </summary>
-        /// <param name="population">Population number in the millions of people .</param>
+        /// <param name="population">Population number in the millions of people.</param>
         /// <param name="countries">Reference to countries collection.</param>
         private static void filterByPopulation(int population, ref IEnumerable<Country> countries)
         {
             countries = countries.Where(c => c.Population < population * 1000000);
+        }
+
+        /// <summary>
+        /// Sorts countries by name.
+        /// </summary>
+        /// <param name="direction">Sorting direction. Possible values "ascend" or "descend".</param>
+        /// <param name="countries">Reference to countries collection.</param>
+        private static void sortByCountryName(string direction, ref IEnumerable<Country> countries)
+        {
+            switch (direction)
+            {
+                case "ascend":
+                    countries = countries.OrderBy(c => c.Name?.Common);
+                    break;
+                case "descend":
+                    countries = countries.OrderByDescending(c => c.Name?.Common);
+                    break;
+                default:
+                    break;
+            }
         }
         #endregion
     }
