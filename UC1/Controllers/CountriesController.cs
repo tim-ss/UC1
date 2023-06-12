@@ -29,5 +29,10 @@ namespace UC1.Controllers
             }
             return Ok(apiResponse);
         }
+
+        private void filterByName(string searchString, ref IEnumerable<Country> countries)
+        {
+            countries = countries.Where(c => c.Name.Common.Contains(searchString, StringComparison.InvariantCultureIgnoreCase));
+        }
     }
 }
