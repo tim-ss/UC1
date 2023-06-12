@@ -30,9 +30,18 @@ namespace UC1.Controllers
             return Ok(apiResponse);
         }
 
-        private void filterByName(string searchString, ref IEnumerable<Country> countries)
+        #region Filters
+
+        /// <summary>
+        /// Filters countries by name.
+        /// </summary>
+        /// <param name="searchString">Part of the name.</param>
+        /// <param name="countries">Reference to countries collection.</param>
+        private static void filterByName(string searchString, ref IEnumerable<Country> countries)
         {
-            countries = countries.Where(c => c.Name.Common.Contains(searchString, StringComparison.InvariantCultureIgnoreCase));
+            countries = countries.Where(c => !string.IsNullOrEmpty(c.Name?.Common) ? c.Name.Common.Contains(searchString, StringComparison.InvariantCultureIgnoreCase) : false);
         }
+
+        #endregion
     }
 }
