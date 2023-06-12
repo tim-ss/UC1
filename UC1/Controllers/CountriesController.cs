@@ -42,6 +42,15 @@ namespace UC1.Controllers
             countries = countries.Where(c => !string.IsNullOrEmpty(c.Name?.Common) ? c.Name.Common.Contains(searchString, StringComparison.InvariantCultureIgnoreCase) : false);
         }
 
+        /// <summary>
+        /// Filters countries by population. Countries where the population is less than provided number are shown in result set.
+        /// </summary>
+        /// <param name="population">Population number in the millions of people .</param>
+        /// <param name="countries">Reference to countries collection.</param>
+        private static void filterByPopulation(int population, ref IEnumerable<Country> countries)
+        {
+            countries = countries.Where(c => c.Population < population * 1000000);
+        }
         #endregion
     }
 }
