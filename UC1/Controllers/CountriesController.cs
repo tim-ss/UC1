@@ -74,6 +74,26 @@ namespace UC1.Controllers
         }
 
         /// <summary>
+        /// Sorts countries by name.
+        /// </summary>
+        /// <param name="direction">Sorting direction. Possible values "ascend" or "descend".</param>
+        /// <param name="countries">Reference to countries collection.</param>
+        private static void sortByCountryName(string direction, ref IEnumerable<Country> countries)
+        {
+            switch (direction)
+            {
+                case "ascend":
+                    countries = countries.OrderBy(c => c.Name?.Common);
+                    break;
+                case "descend":
+                    countries = countries.OrderByDescending(c => c.Name?.Common);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Limits the amount of data in results set.
         /// </summary>
         /// <param name="direction">Number of record to retreive.</param>
