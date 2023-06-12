@@ -25,10 +25,11 @@ namespace UC1.Controllers
         /// <param name="searchString">Country name search string.</param>
         /// <param name="population">Population number in the millions.</param>
         /// <param name="sortDirection">Sorting direction. Possible values "ascend" or "descend".</param>
+        /// <param name="pageSize">Page size for limiting the result set.</param>
         /// <returns>Response containing the list of countries.</returns>
         [HttpGet]
         [Route("")]
-        public async Task<ObjectResult> Get(string? searchString, int? population, string? sortDirection)
+        public async Task<ObjectResult> Get(string? searchString, int? population, string? sortDirection, int? pageSize)
         {
             IEnumerable<Country>? countries = null;
             using (var client = new HttpClient())
@@ -49,6 +50,10 @@ namespace UC1.Controllers
                 if (!string.IsNullOrEmpty(sortDirection))
                 {
                     sortByCountryName(sortDirection, ref countries);
+                }
+                if (pageSize.HasValue)
+                {
+                    paginate(pageSize.Value, ref countries);
                 }
             }
 
