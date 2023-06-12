@@ -19,16 +19,40 @@ namespace UC1.Controllers
             _externalApiUrl = _configuration.GetValue<string>("Urls:CountriesApiUrl");
         }
 
+        /// <summary>
+        /// Returns the list of countries.
+        /// </summary>
+        /// <param name="searchString">Country name search string.</param>
+        /// <param name="population">Population number in the millions.</param>
+        /// <param name="sortDirection">Sorting direction. Possible values "ascend" or "descend".</param>
+        /// <returns>Response containing the list of countries.</returns>
         [HttpGet]
         [Route("")]
-        public async Task<object> Get(string? param1, int? param2, string? param3)
+        public async Task<ObjectResult> Get(string? searchString, int? population, string? sortDirection)
         {
-            object? apiResponse = null;
+            IEnumerable<Country>? countries = null;
             using (var client = new HttpClient())
             {
-                apiResponse = await client.GetFromJsonAsync(_externalApiUrl, typeof(List<Country>));
+                countries = await client.GetFromJsonAsync<IEnumerable<Country>>(_externalApiUrl);
             }
-            return Ok(apiResponse);
+
+            if (countries != null)
+            {
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    filterByName(searchString, ref countries);
+                }
+                if (population.HasValue)
+                {
+                    filterByPopulation(population.Value, ref countries);
+                }
+                if (!string.IsNullOrEmpty(sortDirection))
+                {
+                    sortByCountryName(sortDirection, ref countries);
+                }
+            }
+
+            return Ok(countries);
         }
 
         #region Filters
