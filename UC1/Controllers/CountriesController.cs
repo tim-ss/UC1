@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Immutable;
-using System.Configuration;
+using System.Runtime.CompilerServices;
 using UC1.Models;
 
+[assembly: InternalsVisibleTo("UC1.Tests")]
 namespace UC1.Controllers
 {
     [Route("api/[controller]")]
@@ -67,7 +67,7 @@ namespace UC1.Controllers
         /// </summary>
         /// <param name="searchString">Part of the name.</param>
         /// <param name="countries">Reference to countries collection.</param>
-        private static void filterByName(string searchString, ref IEnumerable<Country> countries)
+        internal protected static void filterByName(string searchString, ref IEnumerable<Country> countries)
         {
             countries = countries.Where(c => !string.IsNullOrEmpty(c.Name?.Common) && c.Name.Common.Contains(searchString, StringComparison.InvariantCultureIgnoreCase));
         }
@@ -77,9 +77,10 @@ namespace UC1.Controllers
         /// </summary>
         /// <param name="population">Population number in the millions of people.</param>
         /// <param name="countries">Reference to countries collection.</param>
-        private static void filterByPopulation(int population, ref IEnumerable<Country> countries)
+        internal protected static void filterByPopulation(int population, ref IEnumerable<Country> countries)
         {
-            countries = countries.Where(c => c.Population < population * 1000000);
+            long populationNumber = (long)population * 1000000;
+            countries = countries.Where(c => c.Population < populationNumber);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace UC1.Controllers
         /// </summary>
         /// <param name="direction">Sorting direction. Possible values "ascend" or "descend".</param>
         /// <param name="countries">Reference to countries collection.</param>
-        private static void sortByCountryName(string direction, ref IEnumerable<Country> countries)
+        internal protected static void sortByCountryName(string direction, ref IEnumerable<Country> countries)
         {
             switch (direction)
             {
@@ -107,7 +108,7 @@ namespace UC1.Controllers
         /// </summary>
         /// <param name="direction">Number of record to retreive.</param>
         /// <param name="countries">Reference to countries collection.</param>
-        private static void paginate(int number, ref IEnumerable<Country> countries)
+        internal protected static void paginate(int number, ref IEnumerable<Country> countries)
         {
             countries = countries.Take(number);
         }
