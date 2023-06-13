@@ -1,18 +1,18 @@
-#Use Case 1
-##Description
+# Use Case 1
+## Description
 This Countries API provides filtering, sorting and paging features for the REST Countries public API.
 Features:
 - fetch the wole list of countries;
 - fetch the results filtered by name and population;
 - fetch the results sorted and paged.
 
-##Running locally
+## Running locally
 To run the application locally switch to the UC1 folder where UC1.sln is located and run the command from the console:
 ```
 dotnet run
 ```
 
-##Example URLs
+## Example URLs
 - https://<hostname:port>/api/countries?searchString=land
 - https://<hostname:port>/api/countries?searchString=land&sortDirection=ascend&pageSize=15
 - https://<hostname:port>/api/countries?population=50
