@@ -227,7 +227,7 @@ namespace UC1.Tests
         #endregion
 
         #region Private methods
-        private IEnumerable<Country> getCountries()
+        private static IEnumerable<Country> getCountries()
         {
             return new List<Country>
             {
