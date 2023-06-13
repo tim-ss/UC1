@@ -2,8 +2,8 @@
 ## Description
 This Countries API provides filtering, sorting and paging features for the REST Countries public API.
 Features:
-- fetch the wole list of countries;
-- fetch the results filtered by name and population;
+- fetch the whole list of countries;
+- fetch the results filtered by name or/and population;
 - fetch the results sorted and paged.
 
 ## Running locally
